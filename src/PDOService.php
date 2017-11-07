@@ -181,4 +181,21 @@ class PDOService implements IServiceDB
 	    return $actor;
 	}
 
+	public function getActorsBySearchAny($str){
+		$actors=array();
+		if ($this->connect()) {
+			if ($result = $this->connectDB->prepare('SELECT * FROM actor WHERE firstname=:str OR lastname=:str')) { 
+				$result->bindValue(':str', $str, PDO::PARAM_STR);
+				$result->execute();
+					$rows=$result->fetchAll();
+					foreach($rows as $row){
+					$actor=new Actor($row[0], $row[1], $row[2]);
+					}
+				
+			}
+		}
+        $this->connectDB=null;
+		return $actors;
+	}
+
 }

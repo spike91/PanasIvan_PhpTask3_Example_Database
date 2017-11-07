@@ -32,29 +32,20 @@ Kasutage Front-End CSS Framework (näiteks, Bootstrap,...)
     <span class="navbar-toggler-icon"></span>
     </button>
 
-
-    <!-- Links -->
     <div class="collapse navbar-collapse" id="nav-content">
-    <ul class="navbar-nav">
+    <ul class="navbar-nav mr-auto mt-2 mt-md-0">
     <li class="nav-item">
     <a class="nav-link" href="Categories.php">Category</a>
     </li>
-    <li class="nav-item">
-    <a class="nav-link" href="">Actors</a>
+    <li class="nav-item mr-auto mt-2 mt-md-0">
+    <a class="nav-link" href="Actors.php">Actors</a>
     </li>
-    <li class="nav-item">
-      <div class="dropdown">
-  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Action
-  </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-</div>
-            </li>
     </ul>
 
+    <form class="form-inline my-2 my-lg-0">
+    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
     </nav>
 
 <div class="container" style="margin-top: 100px; margin-bottom: 50px">
