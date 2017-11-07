@@ -1,3 +1,6 @@
+<?php
+require_once "autoloader.php";
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -43,7 +46,35 @@
 
     </nav>
 
+<div class="container" style="margin-top: 100px; margin-bottom: 30px">
+                <div class="row" >
+                  <h2>Actors List</h2>
+                    <table class="table table-striped table-hover">
+                        <thead class="thead-inverse">
+                        <tr>
+                            <th><div class="text-center">Id</div></th>
+                            <th><div class="text-center">Last Name</div></th>
+                            <th><div class="text-center">First Name</div></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        $db=new PDOService();
+                        $actors=$db->getAllActors();
 
+                        foreach($actors as $actor){?>
+                            <tr>
+                                <td><div class="text-center"><?php echo $actor->id ?></div></td>
+                                <td><div class="text-center"><?php echo $actor->lastname ?></div></td>
+                                <td><div class="text-center"><?php echo $actor->firstname ?></div></td>
+                            </tr>
+                            <?php
+                         }
+                        ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
     <footer class="py-4 bg-dark" style="bottom: 0;position: fixed;width: 100%">
         <div class="h6 text-center" style="color: #dcdcdc;">Ivan Panas RDIR51</div>
