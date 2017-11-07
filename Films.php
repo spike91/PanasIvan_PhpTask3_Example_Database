@@ -23,30 +23,49 @@ require_once "autoloader.php";
 
 
     <!-- Links -->
-    <div class="collapse navbar-collapse" id="nav-content">
+   <div class="collapse navbar-collapse" id="nav-content">
     <ul class="navbar-nav">
     <li class="nav-item">
-    <a class="nav-link" href="Categories.php">Category</a>
+    <a class="nav-link" href="">Category</a>
     </li>
     <li class="nav-item">
     <a class="nav-link" href="Actors.php">Actors</a>
     </li>
-    <li class="nav-item">
-      <div class="dropdown">
-  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Action
-  </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-</div>
-            </li>
     </ul>
 
-    </nav>
+  </nav>
 
+    <div class="container" style="margin-top: 100px; margin-bottom: 30px">
+                <div class="row" >
+                  <h2>Films List</h2>
+                    <table class="table table-striped table-hover">
+                        <thead class="thead-inverse">
+                        <tr>
+                            <th><div class="text-center">Id</div></th>
+                            <th><div class="text-center">Title</div></th>
+                            <th><div class="text-center">Year</div></th>
+                            <th><div class="text-center">Description</div></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        $db=new PDOService();
+                        $films=$db->getFilmByCategoryID($_REQUEST['categoryId']);
 
+                        foreach($films as $film){?>
+                            <tr>
+                                <td><div class="text-center"><?php echo $film->id ?></div></td>
+                                <td><div class="text-center"><?php echo $film->title ?></div></td>
+                                <td><div class="text-center"><?php echo $film->releaseYear ?></div></td>
+                                <td><div class="text-center"><?php echo $film->description ?></div></td>
+                            </tr>
+                            <?php
+                         }
+                        ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
     <footer class="py-4 bg-dark" style="bottom: 0;position: fixed;width: 100%">
         <div class="h6 text-center" style="color: #dcdcdc;">Ivan Panas RDIR51</div>

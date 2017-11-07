@@ -1,6 +1,3 @@
-<?php
-require_once "autoloader.php";
-?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -29,7 +26,7 @@ require_once "autoloader.php";
     <a class="nav-link" href="Categories.php">Category</a>
     </li>
     <li class="nav-item">
-    <a class="nav-link" href="Actors.php">Actors</a>
+    <a class="nav-link" href="">Actors</a>
     </li>
     <li class="nav-item">
       <div class="dropdown">

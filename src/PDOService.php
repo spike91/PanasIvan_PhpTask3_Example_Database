@@ -83,4 +83,35 @@ class PDOService implements IServiceDB
 		return $films;
 	}
 
+	public function getAllCategories(){
+		$categories=array();
+		if ($this->connect()) {
+			if ($result = $this->connectDB->query('SELECT * FROM category')) {
+				$rows = $result->fetchAll(PDO::FETCH_ASSOC);
+                foreach($rows as $row){
+					$categories[]=new Category($row['category_id'], $row['name']);
+                 }
+			}
+		}
+        $this->connectDB=null;
+		return $categories;
+	}
+
+	public function getFilmByCategoryID($id)
+	{
+		$films=array();
+		if ($this->connect()) {
+			if ($result = $this->connectDB->prepare('SELECT * FROM film as f JOIN film_category as fc ON f.film_id=fc.film_id WHERE fc.category_id=:id')) {
+				$result->execute(array('id'=>$id));
+					$rows=$result->fetchAll(PDO::FETCH_BOTH);
+					foreach($rows as $row){
+		$films[]=new Film($row[0], $row[1], $row[2], $row[3], $row[4], $row[5]);
+					 }
+				}
+
+		}
+        $this->connectDB=null;
+	    return $films;
+	}
+
 }
