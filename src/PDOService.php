@@ -111,7 +111,7 @@ class PDOService implements IServiceDB
 		return $actors;
 	}
 
-	public function getFilmByCategoryID($id)
+	public function getFilmsByCategoryID($id)
 	{
 		$films=array();
 		if ($this->connect()) {
@@ -126,6 +126,59 @@ class PDOService implements IServiceDB
 		}
         $this->connectDB=null;
 	    return $films;
+	}
+
+	public function getFilmsByActorID($id)
+	{
+		$films=array();
+		if ($this->connect()) {
+			if ($result = $this->connectDB->prepare('SELECT * FROM film as f JOIN film_actor as fa ON f.film_id=fa.film_id WHERE fa.actor_id=:id')) {
+				$result->execute(array('id'=>$id));
+					$rows=$result->fetchAll(PDO::FETCH_BOTH);
+					foreach($rows as $row){
+		$films[]=new Film($row[0], $row[1], $row[2], $row[3], $row[4], $row[5]);
+					 }
+				}
+
+		}
+        $this->connectDB=null;
+	    return $films;
+	}
+
+	public function getCategoryByID($id)
+	{
+		$category=null;
+		if ($this->connect()) {
+			if ($result = $this->connectDB->prepare('SELECT * FROM category WHERE category_id=:id')) { 
+				$result->execute(array('id'=>$id)); 	
+
+				$numRows = $result->rowCount(); 
+				if ($numRows==1) {
+					$row=$result->fetch();
+					$category=new Category($row[0], $row[1]);
+				}
+			}
+		}
+        $this->connectDB=null;
+	    return $category;
+	}
+
+	public function getActorByID($id)
+	{
+		$actor=null;
+		if ($this->connect()) {
+			if ($result = $this->connectDB->prepare('SELECT * FROM actor WHERE actor_id=:id')) { 
+				$result->execute(array('id'=>$id)); 	
+
+				$numRows = $result->rowCount(); 
+				if ($numRows==1) {
+					$row=$result->fetch();
+					$actor=new Actor($row[0], $row[1], $row[2]);
+				}
+			}
+		}
+        $this->connectDB=null;
+	    return $actor;
 	}
 
 }

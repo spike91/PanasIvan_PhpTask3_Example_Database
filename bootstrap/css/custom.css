@@ -6,3 +6,9 @@ body {
 .navbar {
   margin-bottom: 20px;
 }
+
+.py-2 {
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+}
