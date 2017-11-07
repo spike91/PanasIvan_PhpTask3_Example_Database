@@ -1,5 +1,7 @@
 <?php
-
+/*
+Class FilmInfo has parent class Film and run parent constructor at own constructor
+*/
 class FilmInfo extends Film
 {
     public $actors=array();
@@ -14,4 +16,3 @@ class FilmInfo extends Film
         $this->language=$language;
     }
 }
-
