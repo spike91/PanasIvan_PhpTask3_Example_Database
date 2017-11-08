@@ -181,21 +181,39 @@ class PDOService implements IServiceDB
 	    return $actor;
 	}
 
-	public function getActorsBySearchAny($str){
+	public function getActorsBySearch($str){
 		$actors=array();
 		if ($this->connect()) {
-			if ($result = $this->connectDB->prepare('SELECT * FROM actor WHERE firstname=:str OR lastname=:str')) { 
-				$result->bindValue(':str', $str, PDO::PARAM_STR);
+			if ($result = $this->connectDB->prepare('SELECT * FROM actor WHERE firstname = ? OR lastname = ?')) { 
+				$result->bindValue(1, $str, PDO::PARAM_STR);
+				$result->bindValue(2, $str, PDO::PARAM_STR);
 				$result->execute();
 					$rows=$result->fetchAll();
 					foreach($rows as $row){
-					$actor=new Actor($row[0], $row[1], $row[2]);
+					$actors[]=new Actor($row[0], $row[1], $row[2]);
 					}
 				
 			}
 		}
         $this->connectDB=null;
 		return $actors;
+	}
+
+	public function getFilmsBySearch($str){
+		$films=array();
+		if ($this->connect()) {
+			if ($result = $this->connectDB->prepare('SELECT * FROM film WHERE title = ?')) { 
+				$result->bindValue(1, $str, PDO::PARAM_STR);
+				$result->execute();
+					$rows=$result->fetchAll();
+					foreach($rows as $row){
+						$films[]=new Film($row[0], $row[1], $row[2], $row[3], $row[4], $row[5]);
+					}
+				
+			}
+		}
+        $this->connectDB=null;
+		return $films;
 	}
 
 }

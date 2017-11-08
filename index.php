@@ -9,6 +9,14 @@ require_once "autoloader.php";
       <title></title>
       <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
       <link href="bootstrap/css/custom.css" rel="stylesheet">
+      <link href=" https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css " rel="stylesheet "/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js "></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js "></script>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js "></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="Bootstrap/js/bootstrap.min.js "></script>
+        <script src="Bootstrap/js/bootstrap.js "></script>
 
     </head>
     <body>
@@ -21,10 +29,23 @@ require_once "autoloader.php";
     <div class="collapse navbar-collapse" id="nav-content">
     <ul class="navbar-nav mr-auto mt-2 mt-md-0">
     <li class="nav-item">
-    <a class="nav-link" href="Categories.php">Category</a>
+    <a class="nav-link" href="index.php">Home</a>
     </li>
     <li class="nav-item mr-auto mt-2 mt-md-0">
-    <a class="nav-link" href="Actors.php">Actors</a>
+    <a class="nav-link" href="actors.php">Actors</a>
+    </li>
+    <li class="nav-item dropdown mr-auto mt-2 mt-md-0">
+    <a class="nav-link dropdown-toggle" href="films.php" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
+          <div class="dropdown-menu" aria-labelledby="dropdown01">
+          <?php 
+          $db=new PDOService();
+          $categories=$db->getAllCategories();
+          foreach($categories as $category){ ?>
+            <a class="dropdown-item" href="films.php?categoryId=<?php echo $category->id?>"><?php echo $category->name?></a>
+          <?php }
+          ?>
+          </div>
+  </div>
     </li>
     </ul>
 
@@ -33,7 +54,7 @@ require_once "autoloader.php";
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
     </nav>
-    <div class="container" style="margin-top: 100px; margin-bottom: 50px">                
+    <div class="container" style="margin-bottom: 50px">                
     <?php  
       $films=array();
       $categories=array();
@@ -42,14 +63,14 @@ require_once "autoloader.php";
       if(isset($_REQUEST['search'])){
         $search=$_REQUEST['search'];
         $db= new PDOService();
-        $actors=$db->getActorsBySearchAny($search);
+        $actors=$db->getActorsBySearch($search);
+        $films=$db->getFilmsBySearch($search);
       ?>
       <div class="row" >
                   <h2>Films</h2>
       <table class="table table-striped table-hover">
       <thead class="thead-inverse">
       <tr>
-          <th><div class="text-center">Id</div></th>
           <th><div class="text-center">Title</div></th>
           <th><div class="text-center">Year</div></th>
           <th><div class="text-center">Description</div></th>
@@ -59,7 +80,6 @@ require_once "autoloader.php";
       <?php      
       foreach($films as $film){?>
           <tr>
-              <td><div class="text-center"><?php echo $film->id ?></div></td>
               <td><div class="text-center"><?php echo $film->title ?></div></td>
               <td><div class="text-center"><?php echo $film->releaseYear ?></div></td>
               <td><div class="text-center"><?php echo $film->description ?></div></td>
@@ -69,40 +89,7 @@ require_once "autoloader.php";
       ?>
       </tbody>
   </table>          
-      </div>
-
-      <div class="row" >
-      <h2>Categories</h2>
-      <table class="table table-striped table-hover">
-          <thead class="thead-inverse">
-          <tr>
-              <th><div class="text-center">Id</div></th>
-              <th><div class="text-center">Name</div></th>
-              <th><div class="text-center">Actions</div></th>
-          </tr>
-          </thead>
-          <tbody>
-          <?php
-          foreach($categories as $category){?>
-              <tr>
-                  <td><div class="text-center"><?php echo $category->id ?></div></td>
-                  <td><div class="text-center"><?php echo $category->name ?></div></td>
-                  <td>
-                      <form method="get">
-                          <div class="text-center">
-                              <a href="Films.php?categoryId=<?php echo $category->id ?>" name="categoryId">
-                                  <button type="button" class="btn btn-dark" type="submit">Films</button>
-                              </a>
-                          </div>
-                      </form>
-                  </td>
-              </tr>
-              <?php
-           }
-          ?>
-          </tbody>
-      </table>          
-      </div>
+      </div>      
 
       <div class="row" >
       <h2>Actors</h2>
